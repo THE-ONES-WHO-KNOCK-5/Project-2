@@ -39,7 +39,7 @@ for fermenter in fermValues:
             for dehydrator in dehyValues:
     
                 E = sugar*0.51*fermenter
-                S = sugar*0.49*(1.0-fermenter)
+                S = sugar*(1.0-fermenter)
 
                 F = fiber*(1.0-Filter)
 
@@ -74,9 +74,9 @@ x4 = int(combos[prices.index(min(prices))][3])
 #Quality finders
 
 print (qualityDescriptions[x], "Fermenter")
-print (qualityDescriptions[x2], "Fermenter")
-print (qualityDescriptions[x3], "Fermenter")
-print (qualityDescriptions[x4], "Fermenter")
+print (qualityDescriptions[x2], "Filter")
+print (qualityDescriptions[x3], "Distiller")
+print (qualityDescriptions[x4], "Dehydrator")
 print ("$", min(prices), "m^3 / hour of flow" )
 #Final printing
 

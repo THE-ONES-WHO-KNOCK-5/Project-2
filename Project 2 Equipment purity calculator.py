@@ -15,7 +15,7 @@ distiller = float(input("Input Distiller value: "))
 dehydrator = float(input("Input Dehydrator value: "))
 
 E = sugar*0.51*fermenter
-S = sugar*0.49*(1.0-fermenter)
+S = sugar*(1.0-fermenter)
 
 F = fiber*(1.0-Filter)
 
