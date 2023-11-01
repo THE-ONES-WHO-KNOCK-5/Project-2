@@ -13,4 +13,6 @@ class Fermenter:
                 
     def getCost(self, state: LiquidState):
         return state.getRate() * self.costPerHour
-                
+
+    def fermentLiquid(self, state: LiquidState):
+        return LiquidState(.51 * state.getSugar() * self.efficiency + state.getEthanol(),state.getSugar() * (1 - self.efficiency),state.getWater(),state.getFiber(),state.getCO2 + 0.49 * state.getSugar() * self.efficiency, state.getRate())
