@@ -4,15 +4,13 @@ class LiquidState:
     sugar = None
     water = None
     fiber = None
-    CO2 = None
     rate = None
     
-    def __init__(self, ethanol, sugar, water, fiber, CO2, rate):
+    def __init__(self, rate, ethanol, sugar, water, fiber):
         self.ethanol = ethanol
         self.sugar = sugar
         self.water = water
         self.fiber = fiber
-        self.CO2 = CO2
         self.rate = rate
         
     def getEthanol(self):
@@ -26,12 +24,16 @@ class LiquidState:
 
     def getFiber(self):
         return self.fiber
-    def getCO2(self):
-        return self.CO2
-
+    
     def getRate(self):
         return self.rate
 
-    
+    def getDensity(self):
+        totalMass = self.ethanol + self.sugar + self.water + self.fiber
+        eMass = self.ethanol / totalMass * 789
+        sMass = self.sugar / totalMass * 1599
+        wMass = self.water / totalMass * 997
+        fMass = self.fiber / totalMass * 1311
+        return eMass + sMass + wMass + fMass
     
     
