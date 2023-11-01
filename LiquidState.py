@@ -24,7 +24,7 @@ class LiquidState:
 
     def getFiber(self):
         return self.fiber
-    
+
     def getRate(self):
         return self.rate
 
