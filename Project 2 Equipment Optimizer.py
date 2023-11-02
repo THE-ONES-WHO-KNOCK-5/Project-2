@@ -14,8 +14,8 @@ fermValues = [0.5,0.75,0.9,0.95]
 fermPrices = [320,380,460,1100]
 filtValues = [0.5,0.75,0.9,0.98]
 filtPrices = [200,240,280,480]
-distValues = [0.81,0.9,0.915,0.95]
-distPrices = [320,380,460,1100]
+distValues = [0.81,0.9,0.915,0.98]
+distPrices = [390,460,560,1370]
 dehyValues = [0.5,0.75,0.9,0.98]
 dehyPrices = [200,240,280,480]
 #Equipment coefficients and associated prices
@@ -54,7 +54,7 @@ for fermenter in fermValues:
                 purity = (E/(E+S2+F2+W2))*100.0
                 #Final purity
                 
-                if purity >= 99:
+                if purity >= 98:
                     combo = str(fermValues.index(fermenter)) + str(filtValues.index(Filter)) + str(distValues.index(distiller)) + str(dehyValues.index(dehydrator))
                     price = str(fermPrices[fermValues.index(fermenter)] + filtPrices[filtValues.index(Filter)] + distPrices[distValues.index(distiller)] + dehyPrices[dehyValues.index(dehydrator)])
                     combos.append(combo)
