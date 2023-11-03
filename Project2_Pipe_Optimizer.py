@@ -7,20 +7,26 @@ Created on Thu Nov  2 20:29:03 2023
 
 import itertools as it
 import Project2_Input_Energy_Calculator as ec
+import time
 
 minPrice = 1
 maxEnergy = 0
 minset = []
+timer = 0
+lastTime = time.time()-1
 print ("Running")
+
+# define all possible diameters and relation of diameters to 2D Array Position
+diameters = [0.1,0.11,0.12,0.13,0.14,0.15]
+diameterDict = {0.1:0,0.11:1,0.12:2,0.13:3,0.14:4,0.15:5}
 
 # building all pipe combos
 pipeLines = ["Salvage", "Questionable", "Better", "Nice", "Outstanding", "Glorious"]
-diameters = [0.1,0.11,0.12,0.13,0.14,0.15]
-totalPipes = []
+totalPipes = [[],[],[],[],[],[]]
 
 prices = []
 
-for pipeType, diameter in it.product(pipeLines, diameters):
+for diameter, pipeType in it.product(diameters, pipeLines):
     fricFactor = None
     costPerMeter = None
     
@@ -49,18 +55,17 @@ for pipeType, diameter in it.product(pipeLines, diameters):
         fricFactor = None
         costPerMeter = None
             
-    totalPipes.append({"name": pipeType, "diameter": diameter, "fricFactor": fricFactor, "costRate": costPerMeter})
-    
+    totalPipes[diameterDict[diameter]].append({"name": pipeType, "diameter": diameter, "fricFactor": fricFactor, "costRate": costPerMeter})
+
 # build all angle combos, only using 90 degrees
 bendAngle = 90
-diameters = [0.1,0.11,0.12,0.13,0.14,0.15]
-totalAngles = []
+totalAngles = [None,None, None,None, None,None]
 
 for diameter in diameters:
     pipeLoss = 0.3
     costPerMeter = {0.1:1.28,0.11:1.9,0.12:7,0.13:18,0.14:41,0.15:81}[diameter]
             
-    totalAngles.append({"angle": bendAngle, "diameter": diameter, "pipeLoss": pipeLoss, "costRate": costPerMeter})
+    totalAngles[diameterDict[diameter]] = ({"angle": bendAngle, "diameter": diameter, "pipeLoss": pipeLoss, "costRate": costPerMeter})
 
 # build pumps
 ratingMeters = 12
@@ -75,8 +80,7 @@ for pumpType in pumpLines:
     
 # build Valves
 valveLines = ["Salvage", "Questionable", "Outstanding", "Glorious"]
-diameters = [0.1,0.11,0.12,0.13,0.14,0.15]
-totalValves = []
+totalValves = [[],[],[],[],[],[]]
 
 for valveType, diameter in it.product(valveLines, diameters):
     flowCoef = None
@@ -100,19 +104,32 @@ for valveType, diameter in it.product(valveLines, diameters):
         flowCoef = None
         costPerMeter = None
             
-    totalValves.append({"name": valveType, "diameter": diameter, "flowCoef": flowCoef, "costRate": costPerMeter})
+    totalValves[diameterDict[diameter]].append({"name": valveType, "diameter": diameter, "flowCoef": flowCoef, "costRate": costPerMeter})
 
-# generate all combonations
-for pipe1, angle, pump, valve1 in it.product(totalPipes, totalAngles, totalPumps, totalValves):
-    KE, KEin = ec.energyCalc(pipe1["diameter"],pipe1["diameter"],pipe1["diameter"],pipe1["diameter"],pipe1["diameter"],pipe1["fricFactor"],pipe1["fricFactor"],pipe1["fricFactor"],pipe1["fricFactor"],pipe1["fricFactor"],angle["pipeLoss"], valve1["flowCoef"], valve1["flowCoef"], valve1["flowCoef"], valve1["flowCoef"], valve1["flowCoef"],valve1["flowCoef"], valve1["flowCoef"], valve1["flowCoef"], pump["pumpLoss"])
-    price = pipe1["costRate"]*ec.L1 + pipe1["costRate"]*ec.L2 + pipe1["costRate"]*ec.L3 + pipe1["costRate"]*ec.L4 + pipe1["costRate"]*ec.L5 + angle["costRate"] + pump["costRate"]*ec.Q1*(24 * 60 * 60) + valve1["costRate"] + valve1["costRate"] + valve1["costRate"] + valve1["costRate"] + valve1["costRate"] + valve1["costRate"] + valve1["costRate"] + valve1["costRate"] + (KEin/3600)*0.1202
-    
-    #print([pipe1, angle, pump, valve1], "ratio: ",KE / price)
-    
-    if KE / price > maxEnergy / minPrice:
-        minPrice = price
-        KE = maxEnergy
-        minset = [pipe1, angle, pump, valve1]
+# generate all combonations  total, 40000 a second
+allCombo = 238878720
+readVal = 100000
+for diameterGroup in range(len(diameters)):
+    print("group: ", diameterGroup)
+
+    for pipe1, pipe2, pipe3, pipe4, pipe5, pump, valve1, valve2, valve4, valve6, valve8 in it.product(totalPipes[diameterGroup], totalPipes[diameterGroup], totalPipes[diameterGroup], totalPipes[diameterGroup], totalPipes[diameterGroup], totalPumps, totalValves[diameterGroup],totalValves[diameterGroup],totalValves[diameterGroup],totalValves[diameterGroup],totalValves[diameterGroup]):
+        valve3 = valve2
+        valve5 = valve4
+        valve7 = valve6
+
+        KE, KEin = ec.energyCalc(pipe1["diameter"],pipe2["diameter"],pipe3["diameter"],pipe4["diameter"],pipe5["diameter"],pipe1["fricFactor"],pipe2["fricFactor"],pipe3["fricFactor"],pipe4["fricFactor"],pipe5["fricFactor"],totalAngles[diameterGroup]["pipeLoss"], valve1["flowCoef"], valve2["flowCoef"], valve3["flowCoef"], valve4["flowCoef"], valve5["flowCoef"],valve6["flowCoef"], valve7["flowCoef"], valve8["flowCoef"], pump["pumpLoss"])
+        price = pipe1["costRate"]*ec.L1 + pipe2["costRate"]*ec.L2 + pipe3["costRate"]*ec.L3 + pipe4["costRate"]*ec.L4 + pipe5["costRate"]*ec.L5 + totalAngles[diameterGroup]["costRate"] + pump["costRate"]*ec.Q1*(24 * 60 * 60) + valve1["costRate"] + valve2["costRate"] + valve3["costRate"] + valve4["costRate"] + valve5["costRate"] + valve6["costRate"] + valve7["costRate"] + valve8["costRate"] + (KEin/3600)*0.1202
+        
+        #print([pipe1, angle, pump, valve1], "ratio: ",KE / price)
+        if timer % readVal == 0:
+            print(timer/allCombo * 100, "%")
+            print(allCombo / (readVal/(time.time() - lastTime)) / 60, " min remaining")
+            lastTime = time.time()
+        timer = timer + 1
+        if KE / price > maxEnergy / minPrice:
+            minPrice = price
+            KE = maxEnergy
+            minset = [pipe1, totalAngles[diameterGroup], pump, valve1]
 
 print (minPrice)
 print (minset)
