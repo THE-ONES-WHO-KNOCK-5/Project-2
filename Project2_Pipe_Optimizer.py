@@ -8,12 +8,13 @@ Created on Thu Nov  2 20:29:03 2023
 import itertools as it
 import Project2_Input_Energy_Calculator as ec
 
-minprice = 99999999999999999999999999999999999999999999999
+minPrice = 1
+maxEnergy = 0
+minset = []
 print ("Running")
-times = 0
 
 # building all pipe combos
-pipeLines = ["Questionable", "Better", "Nice", "Outstanding", "Glorious"]
+pipeLines = ["Salvage", "Questionable", "Better", "Nice", "Outstanding", "Glorious"]
 diameters = [0.1,0.11,0.12,0.13,0.14,0.15]
 totalPipes = []
 
@@ -63,7 +64,7 @@ for diameter in diameters:
 
 # build pumps
 ratingMeters = 12
-pumpLines = ["Value", "Standard", "High-Grade", "Premium"]
+pumpLines = ["Cheap", "Value", "Standard", "High-Grade", "Premium"]
 totalPumps = []
 
 for pumpType in pumpLines:
@@ -73,7 +74,7 @@ for pumpType in pumpLines:
     totalPumps.append({"name": pumpType, "ratingMeters": ratingMeters, "pumpLoss": pumpLoss, "costRate": costPerMeter}) 
     
 # build Valves
-valveLines = ["Questionable", "Outstanding", "Glorious"]
+valveLines = ["Salvage", "Questionable", "Outstanding", "Glorious"]
 diameters = [0.1,0.11,0.12,0.13,0.14,0.15]
 totalValves = []
 
@@ -101,19 +102,18 @@ for valveType, diameter in it.product(valveLines, diameters):
             
     totalValves.append({"name": valveType, "diameter": diameter, "flowCoef": flowCoef, "costRate": costPerMeter})
 
-
-
 # generate all combonations
-for pipe1, pipe2, pipe3, pipe4, pipe5, angle, pump, valve1, valve2, valve3, valve4, valve5, valve6, valve7, valve8 in it.product(totalPipes, totalPipes, totalPipes, totalPipes, totalPipes, totalAngles, totalPumps, totalValves, totalValves, totalValves, totalValves, totalValves, totalValves, totalValves, totalValves):
-    KE, KEin = ec.energyCalc(pipe1["diameter"],pipe2["diameter"],pipe3["diameter"],pipe4["diameter"],pipe5["diameter"],pipe1["fricFactor"],pipe2["fricFactor"],pipe3["fricFactor"],pipe4["fricFactor"],pipe5["fricFactor"],angle["pipeLoss"], valve1["flowCoef"], valve2["flowCoef"], valve3["flowCoef"], valve4["flowCoef"], valve5["flowCoef"],valve6["flowCoef"], valve7["flowCoef"], valve8["flowCoef"], pump["pumpLoss"])
-    price = pipe1["costRate"]*ec.L1 + pipe2["costRate"]*ec.L2 + pipe3["costRate"]*ec.L3 + pipe4["costRate"]*ec.L4 + pipe5["costRate"]*ec.L5 + angle["costRate"] + pump["costRate"]*ec.Q1*(24 * 60 * 60) + valve1["costRate"] + valve2["costRate"] + valve3["costRate"] + valve4["costRate"] + valve5["costRate"] + valve6["costRate"] + valve7["costRate"] + valve8["costRate"] + (KEin/3600)*0.1202
-    times = times + 1
-    if times % 10000000 == 0:
-        print ("Running: ", times)
-    if price < minprice:
-        minprice = price
-        minset = [pipe1, pipe2, pipe3, pipe4, pipe5, angle, pump, valve1, valve2, valve3, valve4, valve5, valve6, valve7, valve8]
+for pipe1, angle, pump, valve1 in it.product(totalPipes, totalAngles, totalPumps, totalValves):
+    KE, KEin = ec.energyCalc(pipe1["diameter"],pipe1["diameter"],pipe1["diameter"],pipe1["diameter"],pipe1["diameter"],pipe1["fricFactor"],pipe1["fricFactor"],pipe1["fricFactor"],pipe1["fricFactor"],pipe1["fricFactor"],angle["pipeLoss"], valve1["flowCoef"], valve1["flowCoef"], valve1["flowCoef"], valve1["flowCoef"], valve1["flowCoef"],valve1["flowCoef"], valve1["flowCoef"], valve1["flowCoef"], pump["pumpLoss"])
+    price = pipe1["costRate"]*ec.L1 + pipe1["costRate"]*ec.L2 + pipe1["costRate"]*ec.L3 + pipe1["costRate"]*ec.L4 + pipe1["costRate"]*ec.L5 + angle["costRate"] + pump["costRate"]*ec.Q1*(24 * 60 * 60) + valve1["costRate"] + valve1["costRate"] + valve1["costRate"] + valve1["costRate"] + valve1["costRate"] + valve1["costRate"] + valve1["costRate"] + valve1["costRate"] + (KEin/3600)*0.1202
+    
+    #print([pipe1, angle, pump, valve1], "ratio: ",KE / price)
+    
+    if KE / price > maxEnergy / minPrice:
+        minPrice = price
+        KE = maxEnergy
+        minset = [pipe1, angle, pump, valve1]
 
-print (minprice)
+print (minPrice)
 print (minset)
 
