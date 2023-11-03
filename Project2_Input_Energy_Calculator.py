@@ -6,7 +6,6 @@ Created on Thu Nov  2 16:33:50 2023
 """
 
 import math as m
-
 def energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6, K7, K8, pump):
     # slurry density between systems kg/m^3
     p1 = 1180.2
@@ -53,7 +52,7 @@ def energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6
     #f4 = float(input("Input 4th pipe friction: "))
     #f5 = float(input("Input final pipe friction: "))
     
-    # pipe loss coeffienient (mu)
+    # pipe loss coeffienient for bend (mu)
     #L = float(input("Input pipe loss coefficient: "))
     
     # set valves coeffienct
@@ -110,7 +109,7 @@ def energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6
     
     return KE, Ein
 
-
+"""
 d1 = float(input("Input Initial pipe diameter: "))
 d2 = float(input("Input 2nd pipe diameter: "))
 d3 = float(input("Input 3rd pipe diameter: "))
@@ -140,4 +139,5 @@ K8 = float(input("Input Flow coefficient of valve 8: "))
 # pump effieciency
 pump = float(input("Input pump efficiency: "))
 
-energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6, K7, K7, K8, pump)
+energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6, K7, K8, pump)
+"""

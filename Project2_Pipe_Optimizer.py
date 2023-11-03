@@ -6,6 +6,7 @@ Created on Thu Nov  2 20:29:03 2023
 """
 
 import itertools as it
+import Project2_Input_Energy_Calculator as ec
 
 # building all pipe combos
 pipeLines = ["Salvage", "Questionable", "Better", "Nice", "Outstanding", "Glorious"]
@@ -60,10 +61,10 @@ pumpLines = ["Cheap", "Value", "Standard", "High-Grade", "Premium"]
 totalPumps = []
 
 for pumpType in pumpLines:
-    pipeLoss = {"Cheap": 0.8, "Value": 0.83, "Standard": 0.86, "High-Grade": 0.89, "Premium": 0.92}[pumpType]
+    pumpLoss = {"Cheap": 0.8, "Value": 0.83, "Standard": 0.86, "High-Grade": 0.89, "Premium": 0.92}[pumpType]
     costPerMeter = {"Cheap": 240, "Value": 290, "Standard": 340, "High-Grade": 410, "Premium": 502}[pumpType]
             
-    totalPumps.append({"name": pumpType, "ratingMeters": ratingMeters, "pipeLoss": pipeLoss, "costRate": costPerMeter}) 
+    totalPumps.append({"name": pumpType, "ratingMeters": ratingMeters, "pumpLoss": pumpLoss, "costRate": costPerMeter}) 
     
 # build Valves
 valveLines = ["Salvage", "Questionable", "Outstanding", "Glorious"]
@@ -97,5 +98,6 @@ for valveType, diameter in it.product(valveLines, diameters):
 
 
 # generate all combonations
-for pipe, angle, pump, valve in it.product(totalPipes, totalAngles, totalPumps, totalValves):
-    print(pump["name"])
+for pipe1, pipe2, pipe3, pipe4, pipe5, angle, pump, valve1, valve2, valve3, valve4, valve5, valve7, valve8 in it.product(totalPipes, totalPipes, totalPipes, totalPipes, totalPipes, totalAngles, totalPumps, totalValves, totalValves, totalValves, totalValves, totalValves, totalValves, totalValves, totalValves):
+    KE, input = ec.energyCalc(pipe1["diameter"],pipe2["diameter"],pipe3["diameter"],pipe4["diameter"],pipe5["diameter"],pipe1["fricFactor"],pipe2["fricFactor"],pipe3["fricFactor"],pipe4["fricFactor"],pipe5["fricFactor"],angle["pipeLoss"], valve1["flowCoef"], valve2["flowCoef"], valve3["flowCoef"], valve4["flowCoef"], valve5["flowCoef"], valve7["flowCoef"], valve8["flowCoef"], pump["pumpLoss"])
+    print(KE)
