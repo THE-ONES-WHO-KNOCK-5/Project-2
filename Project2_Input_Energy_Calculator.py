@@ -6,21 +6,29 @@ Created on Thu Nov  2 16:33:50 2023
 """
 
 import math as m
+
+# slurry density between systems kg/m^3
+p1 = 1180.2
+p2= 1058.1379688528186
+p3= 995.9417873735995
+p4= 812.6625000000003
+p5= 795.675767918089
+
+# flow rate in a day (m^3/s)
+Q5 = 100000 * 0.00378541 / (24 * 60 * 60)
+Q4 = (Q5*p4)/p5
+Q3 = (Q4*p3)/p4
+Q2 = (Q3*p2)/p3
+Q1 = (Q2*p1)/p2
+    
+# pipe distances (m)
+L1 = 1 + 0.762
+L2 = 0.762 + 1.524
+L3 = 3.048
+L4 = 3.048
+L5 = 1.324 + 3 + 10.716
+    
 def energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6, K7, K8, pump):
-    # slurry density between systems kg/m^3
-    p1 = 1180.2
-    p2= 1058.1379688528186
-    p3= 995.9417873735995
-    p4= 812.6625000000003
-    p5= 795.675767918089
-    
-    # flow rate in a day (m^3/s)
-    Q5 = 100000 * 0.00378541 / (24 * 60 * 60)
-    Q4 = (Q5*p4)/p5
-    Q3 = (Q4*p3)/p4
-    Q2 = (Q3*p2)/p3
-    Q1 = (Q2*p1)/p2
-    
     # time between rate change (one second)
     t = 1
     
@@ -30,13 +38,6 @@ def energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6
     M3 = p3 * Q3 * t
     M4 = p4 * Q4 * t
     M5 = p5 * Q5 * t
-    
-    # pipe distances (m)
-    L1 = 1 + 0.762
-    L2 = 0.762 + 1.524
-    L3 = 3.048
-    L4 = 3.048
-    L5 = 1.324 + 3 + 10.716
     
     # pipe diameter (m)
     #d1 = float(input("Input Initial pipe diameter: "))
