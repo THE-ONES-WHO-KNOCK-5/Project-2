@@ -105,7 +105,7 @@ def energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6
     KE = -(Eout - Hdwtotal - Hbend - Hvtotal)
     Ein = KE/pump
     
-    print ("Input energy required is:", Ein , "kJ")
+    #print ("Input energy required is:", Ein , "kJ")
     
     return KE, Ein
 

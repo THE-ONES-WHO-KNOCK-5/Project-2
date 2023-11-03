@@ -98,6 +98,6 @@ for valveType, diameter in it.product(valveLines, diameters):
 
 
 # generate all combonations
-for pipe1, pipe2, pipe3, pipe4, pipe5, angle, pump, valve1, valve2, valve3, valve4, valve5, valve7, valve8 in it.product(totalPipes, totalPipes, totalPipes, totalPipes, totalPipes, totalAngles, totalPumps, totalValves, totalValves, totalValves, totalValves, totalValves, totalValves, totalValves, totalValves):
-    KE, input = ec.energyCalc(pipe1["diameter"],pipe2["diameter"],pipe3["diameter"],pipe4["diameter"],pipe5["diameter"],pipe1["fricFactor"],pipe2["fricFactor"],pipe3["fricFactor"],pipe4["fricFactor"],pipe5["fricFactor"],angle["pipeLoss"], valve1["flowCoef"], valve2["flowCoef"], valve3["flowCoef"], valve4["flowCoef"], valve5["flowCoef"], valve7["flowCoef"], valve8["flowCoef"], pump["pumpLoss"])
-    print(KE)
+for pipe1, pipe2, pipe3, pipe4, pipe5, angle, pump, valve1, valve2, valve3, valve4, valve5, valve6, valve7, valve8 in it.product(totalPipes, totalPipes, totalPipes, totalPipes, totalPipes, totalAngles, totalPumps, totalValves, totalValves, totalValves, totalValves, totalValves, totalValves, totalValves, totalValves):
+    KE, input = ec.energyCalc(pipe1["diameter"],pipe2["diameter"],pipe3["diameter"],pipe4["diameter"],pipe5["diameter"],pipe1["fricFactor"],pipe2["fricFactor"],pipe3["fricFactor"],pipe4["fricFactor"],pipe5["fricFactor"],angle["pipeLoss"], valve1["flowCoef"], valve2["flowCoef"], valve3["flowCoef"], valve4["flowCoef"], valve5["flowCoef"],valve6["flowCoef"], valve7["flowCoef"], valve8["flowCoef"], pump["pumpLoss"])
+    
