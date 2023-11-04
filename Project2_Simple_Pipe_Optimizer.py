@@ -15,7 +15,7 @@ import time
 # define all possible diameters and relation of diameters to 2D Array Position
 diameters = [0.1,0.11,0.12,0.13,0.14,0.15]
 diameterDict = {0.1:0,0.11:1,0.12:2,0.13:3,0.14:4,0.15:5}
-def optimizePipes():
+def optimizePipes(densities, flowrates):
     minPrice = 1
     maxEnergy = 0
     minset = []
@@ -125,8 +125,8 @@ def optimizePipes():
             valve8 = valve1
 
             # solves for energies and prices
-            KE, KEin = ec.energyCalc(pipe1["diameter"],pipe2["diameter"],pipe3["diameter"],pipe4["diameter"],pipe5["diameter"],pipe1["fricFactor"],pipe2["fricFactor"],pipe3["fricFactor"],pipe4["fricFactor"],pipe5["fricFactor"],totalAngles[diameterGroup]["pipeLoss"], valve1["flowCoef"], valve2["flowCoef"], valve3["flowCoef"], valve4["flowCoef"], valve5["flowCoef"],valve6["flowCoef"], valve7["flowCoef"], valve8["flowCoef"], pump["pumpLoss"])
-            initPrice = pipe1["costRate"]*ec.L1 + pipe2["costRate"]*ec.L2 + pipe3["costRate"]*ec.L3 + pipe4["costRate"]*ec.L4 + pipe5["costRate"]*ec.L5 + totalAngles[diameterGroup]["costRate"] + pump["costRate"]*ec.Q1*(24 * 60 * 60) + valve1["costRate"] + valve2["costRate"] + valve3["costRate"] + valve4["costRate"] + valve5["costRate"] + valve6["costRate"] + valve7["costRate"] + valve8["costRate"]
+            KE, KEin = ec.energyCalc(pipe1["diameter"],pipe2["diameter"],pipe3["diameter"],pipe4["diameter"],pipe5["diameter"],pipe1["fricFactor"],pipe2["fricFactor"],pipe3["fricFactor"],pipe4["fricFactor"],pipe5["fricFactor"],totalAngles[diameterGroup]["pipeLoss"], valve1["flowCoef"], valve2["flowCoef"], valve3["flowCoef"], valve4["flowCoef"], valve5["flowCoef"],valve6["flowCoef"], valve7["flowCoef"], valve8["flowCoef"], pump["pumpLoss"], densities, flowrates)
+            initPrice = pipe1["costRate"]*ec.L1 + pipe2["costRate"]*ec.L2 + pipe3["costRate"]*ec.L3 + pipe4["costRate"]*ec.L4 + pipe5["costRate"]*ec.L5 + totalAngles[diameterGroup]["costRate"] + pump["costRate"]*flowrates[0]*(24 * 60 * 60) + valve1["costRate"] + valve2["costRate"] + valve3["costRate"] + valve4["costRate"] + valve5["costRate"] + valve6["costRate"] + valve7["costRate"] + valve8["costRate"]
             dailyPrice = (KEin/3600)*0.1202
 
             #creates estimated price of facility running for 365 days

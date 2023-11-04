@@ -2,20 +2,6 @@ import math as m
 import itertools as it
 import Project2_Input_Energy_Calculator as ec
 import time
-
-# slurry density between systems kg/m^3
-p1 = 1180.2
-p2= 1058.1379688528186
-p3= 995.9417873735995
-p4= 812.6625000000003
-p5= 795.675767918089
-
-# flow rate in a day (m^3/s)
-Q5 = 100000 * 0.00378541 / (24 * 60 * 60)
-Q4 = (Q5*p4)/p5
-Q3 = (Q4*p3)/p4
-Q2 = (Q3*p2)/p3
-Q1 = (Q2*p1)/p2
     
 # pipe distances (m)
 L1 = 1 + 0.762
@@ -25,7 +11,20 @@ L4 = 3.048
 L5 = 1.324 + 3 + 10.716
 
 
-def energySystem(d1, d2, d3, d4, f1, f2, f3, f4):
+def energySystem(d1, d2, d3, d4, f1, f2, f3, f4, densities, flowrates, distDensity):
+
+    # slurry density exiting systems kg/m^3
+    p1 = 1.87
+    p2 = 1311
+    p3 = distDensity
+    p4 = 997
+
+    # flow rate in a day (m^3/s)
+    Q1 = flowrates[0]
+    Q2 = flowrates[1]
+    Q3 = flowrates[2]
+    Q4 = flowrates[3]
+
     t = (24 * 60 * 60)
 
     # calculates masses between systems (kg)
@@ -67,7 +66,7 @@ gasCost = [228, 414, 700]
 
 diameterDict = {0.1:0,0.11:1,0.12:2,0.13:3,0.14:4,0.15:5}
 
-def optimizeWaste():
+def optimizeWaste(densities, flowrates, distDensity):
     minPrice = 99999999999999999999999999999999999999999999999999
     maxEnergy = 0
     minset = []
@@ -117,7 +116,7 @@ def optimizeWaste():
     for pipe1, pipe2, pipe3, pipe4 in it.product(totalGas, totalPipes, totalPipes, totalPipes):
 
         # solves for energies and prices
-        KE = energySystem(pipe1["diameter"], pipe2["diameter"], pipe3["diameter"], pipe4["diameter"], pipe1["fricFactor"], pipe2["fricFactor"], pipe3["fricFactor"], pipe4["fricFactor"])
+        KE = energySystem(pipe1["diameter"], pipe2["diameter"], pipe3["diameter"], pipe4["diameter"], pipe1["fricFactor"], pipe2["fricFactor"], pipe3["fricFactor"], pipe4["fricFactor"], densities, flowrates, distDensity)
         initPrice = pipe1["costRate"]*ec.L1 + pipe2["costRate"]*ec.L2 + pipe3["costRate"]*ec.L3 + pipe4["costRate"]*ec.L4
 
 

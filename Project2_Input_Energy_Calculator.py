@@ -6,20 +6,6 @@ Created on Thu Nov  2 16:33:50 2023
 """
 
 import math as m
-
-# slurry density between systems kg/m^3
-p1 = 1180.2
-p2= 1058.1379688528186
-p3= 995.9417873735995
-p4= 812.6625000000003
-p5= 795.675767918089
-
-# flow rate in a day (m^3/s)
-Q5 = 100000 * 0.00378541 / (24 * 60 * 60)
-Q4 = (Q5*p4)/p5
-Q3 = (Q4*p3)/p4
-Q2 = (Q3*p2)/p3
-Q1 = (Q2*p1)/p2
     
 # pipe distances (m)
 L1 = 1 + 0.762
@@ -28,7 +14,23 @@ L3 = 3.048
 L4 = 3.048
 L5 = 1.324 + 3 + 10.716
     
-def energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6, K7, K8, pump):
+def energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6, K7, K8, pump, densities, flowrates):
+
+    # slurry density between systems kg/m^3
+    p1 = densities[0]
+    p2= densities[1]
+    p3= densities[2]
+    p4= densities[3]
+    p5= densities[4]
+
+    # flow rate in a day (m^3/s)
+    Q1 = flowrates[0]
+    Q2 = flowrates[1]
+    Q3 = flowrates[2]
+    Q4 = flowrates[3]
+    Q5 = flowrates[4]
+
+
     # time between rate change (one second)
     t = (24 * 60 * 60)
     
