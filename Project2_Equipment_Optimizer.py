@@ -77,7 +77,7 @@ dailyPrices = []
     combos = []
     prices = []
     #Empty lists
-    costRate = None
+    costRate = 0
 
     #fermenter = float(input("Input Fermenter value: "))
     #Filter = float(input("Input Filter value: "))
@@ -125,7 +125,7 @@ dailyPrices = []
                     
                     purity = (E/(E+S2+F2+W2))*100.0
                     #Final purity
-                    print(purity)
+                    #print(purity)
                     
                     if purity >= 98:
                         combo = str(fermValues.index(fermenter)) + str(filtValues.index(Filter)) + str(distValues.index(distiller)) + str(dehyValues.index(dehydrator))
@@ -160,7 +160,7 @@ print ("Daily cost is $", dailyPrices[prices.index(min(prices))], "per day" )
     print (qualityDescriptions[x2], "Filter")
     print (qualityDescriptions[x3], "Distiller")
     print (qualityDescriptions[x4], "Dehydrator")
-    print ("$", min(prices), "m^3 / hour of flow" )
+    print ("$", min(prices), "m^3 / hour of flow")
     #Final printing
 
     print ("The final mass of ethanol is: ", E, " kg")
