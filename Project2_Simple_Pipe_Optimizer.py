@@ -112,15 +112,24 @@ readVal = 100000
 for diameterGroup in range(len(diameters)):
     print("group: ", diameterGroup)
 
-    for pipe1, pipe2, pipe3, pipe4, pipe5, pump, valve1, valve2, valve4, valve6, valve8 in it.product(totalPipes[diameterGroup], totalPipes[diameterGroup], totalPipes[diameterGroup], totalPipes[diameterGroup], totalPipes[diameterGroup], totalPumps, totalValves[diameterGroup],totalValves[diameterGroup],totalValves[diameterGroup],totalValves[diameterGroup],totalValves[diameterGroup]):
-        valve3 = valve2
-        valve5 = valve4
-        valve7 = valve6
+    for pipe1, pump, valve1 in it.product(totalPipes[diameterGroup], totalPumps, totalValves[diameterGroup]):
+        pipe2 = pipe1
+        pipe3 = pipe1
+        pipe4 = pipe1
+        pipe5 = pipe1
+        
+        valve2 = valve1
+        valve3 = valve1
+        valve4 = valve1
+        valve5 = valve1
+        valve6 = valve1
+        valve7 = valve1
+        valve8 = valve1
 
         KE, KEin = ec.energyCalc(pipe1["diameter"],pipe2["diameter"],pipe3["diameter"],pipe4["diameter"],pipe5["diameter"],pipe1["fricFactor"],pipe2["fricFactor"],pipe3["fricFactor"],pipe4["fricFactor"],pipe5["fricFactor"],totalAngles[diameterGroup]["pipeLoss"], valve1["flowCoef"], valve2["flowCoef"], valve3["flowCoef"], valve4["flowCoef"], valve5["flowCoef"],valve6["flowCoef"], valve7["flowCoef"], valve8["flowCoef"], pump["pumpLoss"])
         price = pipe1["costRate"]*ec.L1 + pipe2["costRate"]*ec.L2 + pipe3["costRate"]*ec.L3 + pipe4["costRate"]*ec.L4 + pipe5["costRate"]*ec.L5 + totalAngles[diameterGroup]["costRate"] + pump["costRate"]*ec.Q1*(24 * 60 * 60) + valve1["costRate"] + valve2["costRate"] + valve3["costRate"] + valve4["costRate"] + valve5["costRate"] + valve6["costRate"] + valve7["costRate"] + valve8["costRate"] + (KEin/3600)*0.1202
         
-        #print([pipe1, angle, pump, valve1], "ratio: ",KE / price)
+        print([pipe1, pump, valve1], "ratio: ",KE , price)
         if timer % readVal == 0:
             print(timer/allCombo * 100, "%")
             print(allCombo / (readVal/(time.time() - lastTime)) / 60, " min remaining")

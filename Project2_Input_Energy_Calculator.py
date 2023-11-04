@@ -30,7 +30,7 @@ L5 = 1.324 + 3 + 10.716
     
 def energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6, K7, K8, pump):
     # time between rate change (one second)
-    t = 1
+    t = (24 * 60 * 60)
     
     # calculates masses between systems (kg)
     M1 = p1 * Q1 * t
