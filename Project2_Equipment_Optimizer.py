@@ -55,8 +55,11 @@ def equipmentCalc(finalFlowrate):
     p3Min = []
     p4Min = []
     p5Min = []
+    Q2Min = []
+    Q3Min = []
+    Q4Min = []
+    Q5Min = []
     #Empty lists
-    costRate = 0
 
     for fermenter in fermValues:
         for Filter in filtValues:
@@ -106,6 +109,10 @@ def equipmentCalc(finalFlowrate):
                         p3Min.append(p3)
                         p4Min.append(p4)
                         p5Min.append(p5)
+                        Q2Min.append(Q2)
+                        Q3Min.append(Q3)
+                        Q4Min.append(Q4)
+                        Q5Min.append(Q5)
                         initialPrices.append(initialPrice)
                         dailyPrices.append(dailyPrice)
                         #Adds the combination of equipments and the price to a list if the purity is at least 99%
@@ -138,21 +145,36 @@ def equipmentCalc(finalFlowrate):
     p4 = p4Min[prices.index(min(prices))]
     p5 = p5Min[prices.index(min(prices))]
     
-    print ("p1 =", p1)
+    print ("p1=", p1)
     print ("p2=", p2)
     print ("p3=", p3)
     print ("p4=", p4)
     print ("p5=", p5)
     
-    print ("The final mass of ethanol is: ", ethanolMin[prices.index(min(prices))], " kg")
-    print ("The final volume of ethanol is: ", E/ dc.pEthanol * 264.172, " gallons")
+    Q1 = Q1 / (60*60)
+    Q2 = Q2Min[prices.index(min(prices))] / (60*60)
+    Q3 = Q3Min[prices.index(min(prices))] / (60*60)
+    Q4 = Q4Min[prices.index(min(prices))] / (60*60)
+    Q5 = Q5Min[prices.index(min(prices))] / (60*60)
+    
+    print ("Q1=", Q1, "m^3 / sec")
+    print ("Q2=", Q2, "m^3 / sec")
+    print ("Q3=", Q3, "m^3 / sec")
+    print ("Q4=", Q4, "m^3 / sec")
+    print ("Q5=", Q5, "m^3 / sec")
+    
+    #print ("The final mass of ethanol is: ", ethanolMin[prices.index(min(prices))], " kg")
+    #print ("The final volume of ethanol is: ", E/ dc.pEthanol * 264.172, " gallons")
 
-    print ("The final mass of sugar is: ", sugarMin[prices.index(min(prices))], " kg")
-    print ("The final mass of water is: ", waterMin[prices.index(min(prices))], " kg")
-    print ("The final mass of fiber is: ", fiberMin[prices.index(min(prices))], " kg")
-    print ("The final purity of the ethanol is: %", purities[prices.index(min(prices))])
+    #print ("The final mass of sugar is: ", sugarMin[prices.index(min(prices))], " kg")
+    #print ("The final mass of water is: ", waterMin[prices.index(min(prices))], " kg")
+    #print ("The final mass of fiber is: ", fiberMin[prices.index(min(prices))], " kg")
+    #print ("The final purity of the ethanol is: %", purities[prices.index(min(prices))])
     #Scrap code
     
     densities = [p1, p2, p3, p4, p5]
+    flowRates = [Q1, Q2, Q3, Q4, Q5]
     
-    return minInitial, minDaily, costRate, densities
+    return minInitial, minDaily, densities, flowRates
+
+equipmentCalc(100000)
