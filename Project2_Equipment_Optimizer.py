@@ -29,6 +29,7 @@ def equipmentCalc(slurryMass):
     combos = []
     prices = []
     #Empty lists
+    costRate = None
 
     #fermenter = float(input("Input Fermenter value: "))
     #Filter = float(input("Input Filter value: "))
@@ -93,4 +94,4 @@ def equipmentCalc(slurryMass):
     print ("The final purity of the ethanol is: %", purity)
     #Scrap code
 
-    return min(prices)
+    return min(prices), costRate
