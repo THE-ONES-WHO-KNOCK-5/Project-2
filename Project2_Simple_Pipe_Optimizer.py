@@ -126,17 +126,27 @@ for diameterGroup in range(len(diameters)):
         valve7 = valve1
         valve8 = valve1
 
+        # solves for energies and prices
         KE, KEin = ec.energyCalc(pipe1["diameter"],pipe2["diameter"],pipe3["diameter"],pipe4["diameter"],pipe5["diameter"],pipe1["fricFactor"],pipe2["fricFactor"],pipe3["fricFactor"],pipe4["fricFactor"],pipe5["fricFactor"],totalAngles[diameterGroup]["pipeLoss"], valve1["flowCoef"], valve2["flowCoef"], valve3["flowCoef"], valve4["flowCoef"], valve5["flowCoef"],valve6["flowCoef"], valve7["flowCoef"], valve8["flowCoef"], pump["pumpLoss"])
-        price = pipe1["costRate"]*ec.L1 + pipe2["costRate"]*ec.L2 + pipe3["costRate"]*ec.L3 + pipe4["costRate"]*ec.L4 + pipe5["costRate"]*ec.L5 + totalAngles[diameterGroup]["costRate"] + pump["costRate"]*ec.Q1*(24 * 60 * 60) + valve1["costRate"] + valve2["costRate"] + valve3["costRate"] + valve4["costRate"] + valve5["costRate"] + valve6["costRate"] + valve7["costRate"] + valve8["costRate"] + (KEin/3600)*0.1202
-        
-        print([pipe1, pump, valve1], "ratio: ",KE , price)
+        initPrice = pipe1["costRate"]*ec.L1 + pipe2["costRate"]*ec.L2 + pipe3["costRate"]*ec.L3 + pipe4["costRate"]*ec.L4 + pipe5["costRate"]*ec.L5 + totalAngles[diameterGroup]["costRate"] + pump["costRate"]*ec.Q1*(24 * 60 * 60) + valve1["costRate"] + valve2["costRate"] + valve3["costRate"] + valve4["costRate"] + valve5["costRate"] + valve6["costRate"] + valve7["costRate"] + valve8["costRate"]
+        dailyPrice = (KEin/3600)*0.1202
+
+        #creates estimated price of facility running for 365 days
+        estimatedPrice = initPrice + dailyPrice*365
+
+
+        #print([pipe1, pump, valve1], "ratio: ",KE , initPrice, dailyPrice)
+
+        # prints estimated time and progress of pipe optimizer
         if timer % readVal == 0:
             print(timer/allCombo * 100, "%")
             print(allCombo / (readVal/(time.time() - lastTime)) / 60, " min remaining")
             lastTime = time.time()
         timer = timer + 1
-        if KE / price > maxEnergy / minPrice:
-            minPrice = price
+        
+        # test for most energy to cheapest system ratio
+        if KE / initPrice > maxEnergy / minPrice:
+            minPrice = estimatedPrice
             KE = maxEnergy
             minset = [pipe1,pipe2,pipe3,pipe4,pipe5, totalAngles[diameterGroup], pump, valve1, valve2, valve3, valve4, valve5, valve6,valve7,valve8]
 
