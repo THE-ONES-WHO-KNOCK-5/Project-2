@@ -175,5 +175,4 @@ def equipmentCalc(finalFlowrate):
     densities = [p1, p2, p3, p4, p5]
     flowRates = [Q1, Q2, Q3, Q4, Q5]
     
-    
-    return minInitial, minDaily, densities, flowRates, wasteRates, distDensity
+    return minInitial, minDaily, densities, flowRates
