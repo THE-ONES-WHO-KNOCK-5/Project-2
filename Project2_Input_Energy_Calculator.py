@@ -80,6 +80,8 @@ def energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6
     
     Eout = 0.5 * p5 * (Q5/A5)**2
     
+    
+    
     # calculates pipe friction
     Hdw1 = M1 * ((f1*(Q1**2)*L1)/(m.pi**2 * d1**5))
     Hdw2 = M2 * ((f2*(Q2**2)*L2)/(m.pi**2 * d2**5))
@@ -103,6 +105,11 @@ def energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6
     Hv8 = M5 * K1 * (((Q5/(m.pi * (d5/2))**2))/2)
     
     Hvtotal = Hv1 + Hv2 + Hv3 + Hv4 + Hv5 + Hv6 + Hv7 + Hv8
+    
+    KE1 = 0.5 * (Q1 / A1)**2
+    KE2 = 0.5 * (Q2 / A2)**2
+    Fermin = KE1 - Hdw1 - Hv1
+    KECO2 = Fermin - Hv2 - KE2
     
     # solves for total energy
     KE = -(Eout - Hdwtotal - Hbend - Hvtotal)
