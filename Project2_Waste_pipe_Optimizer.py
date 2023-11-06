@@ -69,28 +69,27 @@ for d in ventDiameters:
     if d >= (ventFriction * LCO2):
         priceCO2 = LCO2 * ventCosts[ventDiameters.index(d)]
         ventPrices.append(priceCO2)
-print (min(ventPrices))
+print ("Fermenter waste vent of diameter: ", ventDiameters[ventPrices.index(min(ventPrices))] ,"m at a cost of $", min(ventPrices))
+
 
 for d in pipeDiameters:
     for f in pipeFrictions:
         if d >= (f * Lfilt):
             priceFilt = Lfilt * pipecosts[pipeDiameters.index(d)][pipeFrictions.index(f)]
             filtPrices.append(priceFilt)
-print (qualityDescriptions[filtPrices.index(min(filtPrices))], "Fiber pipe of diameter:", pipeDiameters[filtPrices.index(min(filtPrices))], "m")
-print (min(filtPrices))
-
-
+print (qualityDescriptions[filtPrices.index(min(filtPrices))], "Filter waste pipe of diameter:", pipeDiameters[filtPrices.index(min(filtPrices))], "m at a cost of: $", min(filtPrices))
 
 for d in pipeDiameters:
     for f in pipeFrictions:
         if d >= (f * Ldist):
             priceDist = Ldist * pipecosts[pipeDiameters.index(d)][pipeFrictions.index(f)]
             distPrices.append(priceDist)
-print (min(distPrices))
+print (qualityDescriptions[distPrices.index(min(distPrices))], "Distiller waste pipe of diameter:", pipeDiameters[distPrices.index(min(distPrices))], "m at a cost of: $", min(distPrices))
+
 
 for d in pipeDiameters:
     for f in pipeFrictions:
         if d >= (f * Ldehy):
             priceDehy = Ldehy * pipecosts[pipeDiameters.index(d)][pipeFrictions.index(f)]
             dehyPrices.append(priceDehy)
-print (min(dehyPrices))
+print (qualityDescriptions[dehyPrices.index(min(dehyPrices))], "Dehydrator waste pipe of diameter:", pipeDiameters[dehyPrices.index(min(dehyPrices))], "m at a cost of: $", min(dehyPrices))
