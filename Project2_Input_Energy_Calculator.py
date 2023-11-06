@@ -6,30 +6,35 @@ Created on Thu Nov  2 16:33:50 2023
 """
 
 import math as m
-    
+import Project2_Equipment_Optimizer as eo    
+
 # pipe distances (m)
 L1 = 1 + 0.762
 L2 = 0.762 + 1.524
 L3 = 3.048
 L4 = 3.048
 L5 = 1.324 + 3 + 10.716
+
+LCO2 = 3.048 + 1
+Lfilt = 1
+Ldist = 7.096 - 1.5
+Ldehy = 13.192 - 1.5
     
 def energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6, K7, K8, pump, densities, flowrates):
 
     # slurry density between systems kg/m^3
-    p1 = densities[0]
-    p2= densities[1]
-    p3= densities[2]
-    p4= densities[3]
-    p5= densities[4]
+    p1= eo.equipmentCalc(100000)[2][0]
+    p2= eo.equipmentCalc(100000)[2][1]
+    p3= eo.equipmentCalc(100000)[2][2]
+    p4= eo.equipmentCalc(100000)[2][3]
+    p5= eo.equipmentCalc(100000)[2][4]
 
     # flow rate in a day (m^3/s)
-    Q1 = flowrates[0]
-    Q2 = flowrates[1]
-    Q3 = flowrates[2]
-    Q4 = flowrates[3]
-    Q5 = flowrates[4]
-
+    Q1 = eo.equipmentCalc(100000)[3][0]
+    Q2 = eo.equipmentCalc(100000)[3][1]
+    Q3 = eo.equipmentCalc(100000)[3][2]
+    Q4 = eo.equipmentCalc(100000)[3][3]
+    Q5 = eo.equipmentCalc(100000)[3][4]
 
     # time between rate change (one second)
     t = (24 * 60 * 60)
@@ -40,6 +45,12 @@ def energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6
     M3 = p3 * Q3 * t
     M4 = p4 * Q4 * t
     M5 = p5 * Q5 * t
+    
+    # calculates masses of waste materials
+    MCO2 = M1 - M2
+    Mfiber = M2 - M3
+    Mdistiller = M3 - M4
+    Mwater = M4 - M5
     
     # pipe diameter (m)
     #d1 = float(input("Input Initial pipe diameter: "))
@@ -79,8 +90,6 @@ def energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6
     A5 = m.pi * (d5/2)**2
     
     Eout = 0.5 * p5 * (Q5/A5)**2
-    
-    
     
     # calculates pipe friction
     Hdw1 = M1 * ((f1*(Q1**2)*L1)/(m.pi**2 * d1**5))
