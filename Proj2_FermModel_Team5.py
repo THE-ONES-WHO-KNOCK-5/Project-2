@@ -7,7 +7,9 @@ print("|-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= Team 5: The Ones Who 
 print("\nWelcome to Team 5 Ethanol Simulator!")
 print("\nThroughout this simulation, we will calculate the optimal combonation of equipments and prices for the full system anc calculate cost and production.")
 print("\nFirst, we will calculate the optimal combonation of equipments and prices for the 4 major systems.")
-finalVolume = 100000
+
+finalVolume = input("\nEnter final amount of Ethanol (Gallons): ")
+
 print("\nStarting with final Ethanol Volume (Gallons),", finalVolume,"Gallons.")
 input("\nPress Enter to continue...")
 
