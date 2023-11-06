@@ -17,7 +17,9 @@ diameters = [0.1,0.11,0.12,0.13,0.14,0.15]
 diameterDict = {0.1:0,0.11:1,0.12:2,0.13:3,0.14:4,0.15:5}
 def optimizePipes(densities, flowrates):
     minPrice = 1
+    minDaily = 0
     maxEnergy = 0
+    minEstimatedPrice = 1
     minset = []
 
     # building all pipe combos
@@ -108,7 +110,7 @@ def optimizePipes(densities, flowrates):
     allCombo = 238878720
     readVal = 100000
     for diameterGroup in range(len(diameters)):
-        print("group: ", diameterGroup)
+        #print("group: ", diameterGroup)
 
         for pipe1, pump, valve1 in it.product(totalPipes[diameterGroup], totalPumps, totalValves[diameterGroup]):
             pipe2 = pipe1
@@ -136,15 +138,19 @@ def optimizePipes(densities, flowrates):
             #print([pipe1, pump, valve1], "ratio: ",KE , initPrice, dailyPrice)
 
             # test for most energy to cheapest system ratio
-            if KE / initPrice > maxEnergy / minPrice:
-                minPrice = estimatedPrice
+            if KE / estimatedPrice > maxEnergy / (minEstimatedPrice):
+                minInit = initPrice
+                minDaily = dailyPrice
+                minEstimatedPrice = estimatedPrice
                 KE = maxEnergy
                 minset = [pipe1,pipe2,pipe3,pipe4,pipe5, totalAngles[diameterGroup], pump, valve1, valve2, valve3, valve4, valve5, valve6,valve7,valve8]
 
-    print ("$", minPrice, "m^3 / hour of flow")
-    print ("Optimal type and diameter for each pipe, valve, pump, and bend:")
+            # test for least energy to expensive system ratio
+    print("\n$%.2f inital price." % minInit)
+    print ("$%.2f per day" % minDaily)
+    print ("\nOptimal type and diameter for each pipe, valve, pump, and bend:")
     for i in minset:
         print (i)
     
-    return initPrice, dailyPrice
+    return minInit, minDaily
 

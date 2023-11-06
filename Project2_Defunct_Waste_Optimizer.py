@@ -16,7 +16,7 @@ def energySystem(d1, d2, d3, d4, f1, f2, f3, f4, densities, flowrates):
     # slurry density exiting systems kg/m^3
     p1 = 1.87
     p2 = 1311
-    p3 = distDensity
+    p3 = 0
     p4 = 997
 
     # flow rate in a day (m^3/s)

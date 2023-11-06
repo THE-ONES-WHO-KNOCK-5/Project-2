@@ -23,18 +23,18 @@ Ldehy = 13.192 - 1.5
 def energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6, K7, K8, pump, densities, flowrates):
 
     # slurry density between systems kg/m^3
-    p1= eo.equipmentCalc(100000)[2][0]
-    p2= eo.equipmentCalc(100000)[2][1]
-    p3= eo.equipmentCalc(100000)[2][2]
-    p4= eo.equipmentCalc(100000)[2][3]
-    p5= eo.equipmentCalc(100000)[2][4]
+    p1= densities[0]
+    p2= densities[1]
+    p3= densities[2]
+    p4= densities[3]
+    p5= densities[4]
 
     # flow rate in a day (m^3/s)
-    Q1 = eo.equipmentCalc(100000)[3][0]
-    Q2 = eo.equipmentCalc(100000)[3][1]
-    Q3 = eo.equipmentCalc(100000)[3][2]
-    Q4 = eo.equipmentCalc(100000)[3][3]
-    Q5 = eo.equipmentCalc(100000)[3][4]
+    Q1 = flowrates[0]
+    Q2 = flowrates[1]
+    Q3 = flowrates[2]
+    Q4 = flowrates[3]
+    Q5 = flowrates[4]
 
     # time between rate change (one second)
     t = (24 * 60 * 60)
@@ -128,7 +128,6 @@ def energyCalc(d1, d2, d3, d4, d5, f1, f2, f3, f4, f5, L, K1, K2, K3, K4, K5, K6
     
     return KE, Ein
 
-energyCalc(1)
 
 """
 d1 = float(input("Input Initial pipe diameter: "))
