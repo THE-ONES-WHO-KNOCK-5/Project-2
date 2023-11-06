@@ -11,7 +11,7 @@ L4 = 3.048
 L5 = 1.324 + 3 + 10.716
 
 
-def energySystem(d1, d2, d3, d4, f1, f2, f3, f4, densities, flowrates, distDensity):
+def energySystem(d1, d2, d3, d4, f1, f2, f3, f4, densities, flowrates):
 
     # slurry density exiting systems kg/m^3
     p1 = 1.87

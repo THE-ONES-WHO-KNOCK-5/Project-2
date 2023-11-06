@@ -13,7 +13,7 @@ finalVolume = input("\nEnter final amount of Ethanol (Gallons): ")
 print("\nStarting with final Ethanol Volume (Gallons),", finalVolume,"Gallons.")
 input("\nPress Enter to continue...")
 
-eInit, eDaily, densities, flowrates, wasteRates, distDensity = eo.equipmentCalc(finalVolume)
+eInit, eDaily, densities, flowrates = eo.equipmentCalc(finalVolume)
 
 input("\nPress Enter to continue...")
 print("\nNext, we will calculate the optimal combonation for the pipes, valves, pump, and bends in the system.")
@@ -28,7 +28,7 @@ print("\nFinally, we will calculate the cost of the pipes for waste resources.")
 
 input("\nPress Enter to continue...")
 
-wInit = wo.optimizeWaste(densities, wasteRates, distDensity)
+#wInit = 
 
 input("\nPress Enter to continue...")
 
@@ -41,4 +41,4 @@ totalDaily = float(eDaily) + float(sDaily)
 
 print("\n$" + str(totalInit) + " Inital Upfront.")
 print("\n$" + str(totalDaily) + " Daily.")
-print("\n$" + str(totalInit + totalDaily * 365) + " estimated for a year.")
+print("\n$" + str(totalInit + totalDaily * 365) + " estimated for a year plus upfront.")
